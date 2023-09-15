@@ -1,0 +1,17 @@
+calculaQuadrado :-
+    repeat,
+    write('Digite um número ou "stop" para sair: '),
+    read(Input),
+    processa_input(Input).
+
+processa_input(stop) :-
+    !.
+
+processa_input(Number) :-
+    Quadrado is Number * Number,
+    write('O quadrado de '),
+    write(Number),
+    write(' é '),
+    write(Quadrado),
+    nl,
+    fail.
