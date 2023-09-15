@@ -1,0 +1,50 @@
+estrada(cidade(a), cidade(b), caminho(b), custo(90)).
+estrada(cidade(a), cidade(g), caminho(g), custo(187)).
+estrada(cidade(a), cidade(d), caminho(x), custo(100)).
+
+estrada(cidade(b), cidade(a), caminho(a), custo(150)).
+estrada(cidade(b), cidade(d), caminho(e), custo(50)).
+estrada(cidade(b), cidade(e), caminho(f), custo(89)).
+estrada(cidade(b), cidade(c), caminho(c), custo(211)).
+
+estrada(cidade(c), cidade(j), caminho(j), custo(300)).
+
+estrada(cidade(d), cidade(h), caminho(h), custo(254)).
+estrada(cidade(d), cidade(l), caminho(l), custo(99)).
+
+estrada(cidade(f), cidade(i), caminho(i), custo(621)).
+
+estrada(cidade(g), cidade(a), caminho(d), custo(300)).
+
+estrada(cidade(h), cidade(m), caminho(m), custo(148)).
+
+estrada(cidade(i), cidade(j), caminho(k), custo(41)).
+
+estrada(cidade(j), cidade(l), caminho(q), custo(364)).
+
+estrada(cidade(l), cidade(o), caminho(s), custo(193)).
+estrada(cidade(l), cidade(n), caminho(w), custo(250)).
+
+estrada(cidade(n), cidade(p), caminho(v), custo(150)).
+
+estrada(cidade(p), cidade(n), caminho(o), custo(69)).
+estrada(cidade(p), cidade(m), caminho(n), custo(163)).
+
+estrada(cidade(r), cidade(l), caminho(r), custo(79)).
+
+estrada(cidade(s), cidade(l), caminho(p), custo(10)).
+estrada(cidade(s), cidade(p), caminho(t), custo(311)).
+estrada(cidade(s), cidade(r), caminho(u), custo(577)).
+
+
+rota(A, B, [caminho(X)], C) :- estrada(A, B, X, C).
+rota(A, B, [caminho(X)|R], C) :-
+    estrada(A, Z, X, C1),
+    rota(Z, B, R, C2),
+    C is C1 + C2.
+
+rotachega(R, A, C) :- rota(_, A, R, C).
+
+rotasai(R, A, C) :- rota(A, _, R, C).
+
+rotamaiseconomica(B, R, Cmax) :- rota(_, B, R, C), C < Cmax.
