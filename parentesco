@@ -1,0 +1,75 @@
+progenitor(jose, joao).
+progenitor(maria, joao).
+progenitor(jose, ana).
+progenitor(maria, ana).
+progenitor(ana, helena).
+progenitor(ana, joana).
+progenitor(joao, mario).
+progenitor(helena, carlos).
+progenitor(mario, carlos).
+
+sexo(jose, masculino).
+sexo(maria, feminino).
+sexo(joao, masculino).
+sexo(ana, feminino).
+sexo(helena, feminino).
+sexo(joana, feminino).
+sexo(mario, masculino).
+sexo(carlos, masculino).
+
+irma(X, Y) :-
+    progenitor(Z, X),
+    progenitor(Z, Y),
+    sexo(X, feminino),
+    X \= Y.
+
+irmao(X, Y) :-
+    progenitor(Z, X),
+    progenitor(Z, Y),
+    sexo(X, masculino),
+    X \= Y.
+
+filho(X, Y) :-
+    progenitor(Y, X).
+
+mae(X, Y) :-
+    progenitor(X, Y),
+    sexo(X, feminino).
+
+pai(X, Y) :-
+    progenitor(X, Y),
+    sexo(X, masculino).
+
+avo(X, Z) :-
+    progenitor(X, Y),
+    progenitor(Y, Z),
+    sexo(X, masculino).
+
+tio(X, Z) :-
+    irmao(X, Y),
+    progenitor(Y, Z).
+
+primo(X, Z) :-
+    progenitor(Y, X),
+    tio(Y, Z).
+
+sobrinho(Sobrinho, Tio) :-
+    progenitor(Pai, Sobrinho),
+    progenitor(Irmao, Pai),
+    progenitor(Tio, Irmao),
+    Sobrinho \= Tio,
+    sexo(Sobrinho, masculino).
+
+sobrinha(Sobrinha, Tio) :-
+    progenitor(Pai, Sobrinha),
+    progenitor(Irmao, Pai),
+    progenitor(Tio, Irmao),
+    Sobrinha \= Tio,
+    sexo(Sobrinha, feminino).
+
+totalSobrinhos(Tio, Total) :-
+    setof(Sobrinho, sobrinho(Sobrinho, Tio), Sobrinhos),
+    setof(Sobrinha, sobrinha(Sobrinha, Tio), Sobrinhas),
+    length(Sobrinhos, NumSobrinhos),
+    length(Sobrinhas, NumSobrinhas),
+    Total is NumSobrinhos + NumSobrinhas.
